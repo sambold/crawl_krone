@@ -114,6 +114,9 @@ crawl_krone <- function(url.base = "https://www.krone.at/das-freie-wort/",
     ende <- FALSE
     ende.cnt <- 0
     i <- 0
+    # Temp-Dir erzeugen
+    if (!file.exists(paste0(bu.path,"/RData"))) dir.create(paste0(bu.path,"/RData"))
+    
     # Temp laden, falls vorhanden
     if (temp & file.exists(paste0(bu.path,"/RData/krone_leserbriefe.RData"))){
         load(paste0(bu.path,"/RData/krone_leserbriefe.RData"))
@@ -274,7 +277,7 @@ crawl_leserbriefe <- function(df,                                           # da
                              dplyr::select(link,text,ort,detail,timestamp.ext),
                          by=c("link"="link")) %>%
         #dplyr::filter(!duplicated.data.frame(.))
-        dplyr::arrange(-timestamp.ext) %>%
+        dplyr::arrange(desc(timestamp.ext)) %>%
         dplyr::distinct(date,header,teaser,author,link,text,ort,detail)
     
     return(brief.df)
