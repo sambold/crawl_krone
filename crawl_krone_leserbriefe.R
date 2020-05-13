@@ -142,7 +142,7 @@ crawl_krone <- function(url.base = "https://www.krone.at/das-freie-wort/",
         url.date <- lubridate::as_date(url.date,"%Y/%m/%d") %>%
             magrittr::subtract(1) %>%
             format("%Y/%m/%d")
-        if (url.date == ende.date){
+        if (url.date < ende.date){
             cat("## Angegebenes Enddatum erreicht. Es wurden die Leserbriefe vom",
                 start.date,"bis zum",ende.date,"gespeichert\n")
             ende <- TRUE
